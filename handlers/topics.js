@@ -54,3 +54,9 @@ exports.topics = functions.https.onRequest((request, response) => {
             response.status(500).json({ error: err.code });
         });
 });
+
+
+
+exports.login = (req, res) => {
+    return res.json({"isLogin":true})
+};

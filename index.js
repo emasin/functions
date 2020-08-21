@@ -7,6 +7,8 @@ app.use(cors());
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-const  {topic,getAllScreams} = require ("./handlers/topics");
+const  {login,getAllScreams} = require ("./handlers/topics");
 app.get('/topics', getAllScreams);
+app.get('/login', login);
+
 exports.api = functions.region('us-central1').https.onRequest(app);
