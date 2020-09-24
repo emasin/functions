@@ -10,9 +10,9 @@ const mysql = require('mysql');
 
 exports.login = (req, res) => {
 
-    const {username, password} = req.body;
+    const {email, password} = req.body; // {email:'devkids@kakao.com',password:'usr-9cfe92cd'};
 
-
+    console.log(req.body);
 
 
     const secret = req.app.get('jwt-secret');
@@ -34,7 +34,7 @@ exports.login = (req, res) => {
                         },
                         secret,
                         {
-                            expiresIn: '7d',
+                            expiresIn: '1d',
                             issuer: 'devkids.com',
                             subject: 'userInfo'
                         }, (err, token) => {
@@ -55,7 +55,7 @@ exports.login = (req, res) => {
         })
     }
 
-const findUser = (username) => {
+const findUser = (username,password) => {
 
     var connection = mysql.createConnection({
         host: 'database-1.cxzihv8lxxxj.ap-northeast-2.rds.amazonaws.com',
@@ -68,12 +68,13 @@ const findUser = (username) => {
     const p = new Promise((resolve, reject) => {
 
     connection.connect();
-        connection.query("select * from comt_user where login_id = ?", ['devkids@kakao.com'], function (err, rows, fields) {
+        connection.query("select * from comt_user where login_id = ? and user_id = ?", [username,password], function (err, rows, fields) {
             connection.end();
             if (!err) {
 
                 var result = 'rows : ' + JSON.stringify(rows) + '<br><br>' +
                     'fields : ' + JSON.stringify(fields);
+
                 //res.send(result);
                 //return res.json(rows[0]);
 
@@ -105,7 +106,7 @@ const findUser = (username) => {
     }
 
 
-    findUser(username)
+    findUser(email,password)
         .then(check)
         .then(respond)
         .catch(onError)

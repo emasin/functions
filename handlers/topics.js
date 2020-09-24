@@ -29,28 +29,30 @@ exports.getAllScreams = (req, res) => {
         });
 };
 
-exports.topics = functions.https.onRequest((request, response) => {
-    db.collection('video')
-        .orderBy('likeCount', 'desc')
+exports.getHistory = (req, res) => {
+    db.collection('history')
+        .orderBy('history_dt', 'desc')
         .get()
         .then((data) => {
             let screams = [];
             data.forEach((doc) => {
                 screams.push({
-                    vid: doc.data().vid,
+                    id : doc.id,
+                    type: doc.data().type,
                     title : doc.data().title,
-                    tags : doc.data().tags,
-                    likeCount: doc.data().likeCount
+                    link : doc.data().link,
+                    user_id : doc.data().user_id,
+                    history_dt : doc.data().history_dt
 
                 });
             });
-            return response.json(screams);
+            return res.json(screams);
         })
         .catch((err) => {
             console.error(err);
-            response.status(500).json({ error: err.code });
+            res.status(500).json({ error: err.code });
         });
-});
+};
 
 
 
