@@ -15,11 +15,11 @@ exports.addUser = (req, res) => {
     console.log(req.body);
 
 
-    const respond = (
+    const respond = (   uid
 
     ) => {
         res.json({
-            message: 'signup in successfully'
+            message: 'signup in successfully '.concat(uid)
         })
     }
 
@@ -27,7 +27,7 @@ const addUser = (user_id,pwd,hp,nickname,sid) => {
 
     var connection = mysql.createConnection({
         host: 'db.devkids.co.kr',
-        post: 19202,
+        port: 19202,
         user: 'devkids',
         password: 'Tlem2019!!',
         database: 'user_db'
@@ -45,12 +45,12 @@ const addUser = (user_id,pwd,hp,nickname,sid) => {
 
                 //res.send(result);
                 //return res.json(rows[0]);
-                console.log(result);
-
-
+                console.log("rows.insertId",rows.insertId);
+                //return result.insertId;
+                resolve(rows.insertId);
             } else {
                 console.log('query error : ' + err);
-                //throw new Error('error ' + err)
+                throw new Error('error ' + err)
             }
 
         });
@@ -75,7 +75,6 @@ const addUser = (user_id,pwd,hp,nickname,sid) => {
 
 
     addUser(user_id,pwd,hp,nickname,1)
-
         .then(respond)
         .catch(onError)
 
