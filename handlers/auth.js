@@ -58,11 +58,11 @@ exports.login = (req, res) => {
 const findUser = (username,password) => {
 
     var connection = mysql.createConnection({
-        host: 'database-1.cxzihv8lxxxj.ap-northeast-2.rds.amazonaws.com',
-        post: 3306,
-        user: 'root',
-        password: 'tmxpdlwjdrmf2020',
-        database: 'blossomme'
+        host: 'db.devkids.co.kr',
+        post: 19202,
+        user: 'devkids',
+        password: 'Tlem2019!!',
+        database: 'user_db'
     });
 
     const p = new Promise((resolve, reject) => {
@@ -106,7 +106,7 @@ const findUser = (username,password) => {
     }
 
 
-    findUser(email,password)
+            findUser(email,password)
         .then(check)
         .then(respond)
         .catch(onError)
