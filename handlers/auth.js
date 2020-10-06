@@ -10,7 +10,7 @@ const mysql = require('mysql');
 
 exports.login = (req, res) => {
 
-    const {email, password} = req.body; // {email:'devkids@kakao.com',password:'usr-9cfe92cd'};
+    const {login_id, pwd} = req.body; // {email:'devkids@kakao.com',password:'usr-9cfe92cd'};
 
     console.log(req.body);
 
@@ -59,7 +59,7 @@ const findUser = (username,password) => {
 
     var connection = mysql.createConnection({
         host: 'db.devkids.co.kr',
-        post: 19202,
+        port: 19202,
         user: 'devkids',
         password: 'Tlem2019!!',
         database: 'user_db'
@@ -68,10 +68,10 @@ const findUser = (username,password) => {
     const p = new Promise((resolve, reject) => {
 
     connection.connect();
-        connection.query("select * from comt_user where login_id = ? and user_id = ?", [username,password], function (err, rows, fields) {
+        connection.query("select * from TB_USER where hp = ? and pwd = ?", [username,password], function (err, rows, fields) {
             connection.end();
             if (!err) {
-
+                console.log(`${username} ${password}`);
                 var result = 'rows : ' + JSON.stringify(rows) + '<br><br>' +
                     'fields : ' + JSON.stringify(fields);
 
@@ -106,7 +106,7 @@ const findUser = (username,password) => {
     }
 
 
-            findUser(email,password)
+            findUser(login_id,pwd)
         .then(check)
         .then(respond)
         .catch(onError)
