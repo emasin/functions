@@ -29,8 +29,8 @@ exports.login = (req, res) => {
                 const p = new Promise((resolve, reject) => {
                     jwt.sign(
                         {
-                            _id : user.USER_ID,
-                            username: user.USER_NM,
+                            _id : user.uid,
+                            username: user.nickname,
                         },
                         secret,
                         {
