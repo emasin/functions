@@ -18,6 +18,7 @@ admin.initializeApp();
 const  {getAllScreams,getHistory } = require ("./handlers/topics");
 const  {login,check} = require ("./handlers/auth");
 const  {addUser} = require ("./handlers/user");
+const  {addOrder} = require ("./handlers/order");
 const  { visit} = require ("./handlers/covid19");
 app.options('/write', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -28,6 +29,7 @@ app.options('/write', (req, res) => {
 });
 
 //app.use(express.json());
+app.post('/order',addOrder);
 app.post('/user/add',addUser);
 app.post('/login', login);
 app.get('/topics', getAllScreams);
