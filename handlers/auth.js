@@ -86,7 +86,7 @@ const findUser = (username,password) => {
 
             } else {
                 console.log('query error : ' + err);
-                throw new Error('notfound')
+                throw new Error('notfound ' + err )
             }
 
         });

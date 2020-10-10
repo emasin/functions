@@ -6,12 +6,12 @@ const jwt = require('jsonwebtoken');
 const mysql = require('mysql');
 
 
-
+const db = admin.firestore();
 
 exports.addOrder = (req, res) => {
 
-    const {cost,items, odt,status} = req.body; // {email:'devkids@kakao.com',password:'usr-9cfe92cd'};
-    console.log("items",items);
+    const {cost,items, odt,status,userInfo} = req.body; // {email:'devkids@kakao.com',password:'usr-9cfe92cd'};
+
     console.log(req.body);
 
 
@@ -24,19 +24,26 @@ exports.addOrder = (req, res) => {
         })
     }
 
-const addOrder = (cost,items, odt,status) => {
-
-    var connection = mysql.createConnection({
-        host: 'db.devkids.co.kr',
-        port: 19202,
-        user: 'devkids',
-        password: 'Tlem2019!!',
-        database: 'user_db'
-    });
+const addOrder = (cost,items, odt,status,userInfo) => {
 
     const p = new Promise((resolve, reject) => {
         const oid = odt;
-        resolve(oid);
+        db.collection("CafeROrder").add({
+            odt:  odt,
+            ststus: status,
+            cpst: cost,
+            items: items,
+            userInfo:userInfo
+        }).then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            resolve(oid);
+        }).catch(function(error) {
+
+            console.error("Error adding document: ", error);
+            throw new Error('error ' + err);
+        });
+
+
         /**
 
 
@@ -79,7 +86,7 @@ const addOrder = (cost,items, odt,status) => {
 
 
 
-    addOrder(cost,items, odt,status)
+    addOrder(cost,items, odt,status,userInfo)
         .then(respond)
         .catch(onError)
 
