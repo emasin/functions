@@ -94,3 +94,29 @@ const addOrder = (cost,items, odt,status,userInfo) => {
 };
 
 
+exports.orderList = (req, res) => {
+    db.collection('CafeROrder')
+        .where('odt','>','20201010000000')
+        .orderBy('odt', 'desc')
+        .get()
+        .then((data) => {
+            let screams = [];
+            data.forEach((doc) => {
+                screams.push({
+                    id : doc.id,
+                    userInfo: doc.data().userInfo,
+                    status : doc.data().status,
+                    odt : doc.data().odt,
+                    items: doc.data().items
+
+                });
+            });
+            return res.json(screams);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: err.code });
+        });
+};
+
+
