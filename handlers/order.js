@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 
 const mysql = require('mysql');
@@ -95,8 +96,11 @@ const addOrder = (cost,items, odt,status,userInfo) => {
 
 
 exports.orderList = (req, res) => {
+
+    const d = moment().add(-11,'days').format('YYYYMMDDhhmmss');
+
     db.collection('CafeROrder')
-        .where('odt','>','20201010000000')
+        .where('odt','>',d)
         .orderBy('odt', 'desc')
         .get()
         .then((data) => {
