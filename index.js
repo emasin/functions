@@ -18,7 +18,7 @@ admin.initializeApp();
 const  {getAllScreams,getHistory } = require ("./handlers/topics");
 const  {login,check} = require ("./handlers/auth");
 const  {addUser} = require ("./handlers/user");
-const  {addOrder,orderList} = require ("./handlers/order");
+const  {addOrder,orderList,compltOrder} = require ("./handlers/order");
 const  { visit} = require ("./handlers/covid19");
 app.options('/write', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -35,6 +35,7 @@ app.post('/login', login);
 app.get('/topics', getAllScreams);
 app.get('/my/history', getHistory);
 app.get('/manage/orderList', orderList);
+app.post('/manage/complt', compltOrder);
 app.get('/visit', visit);
 app.use('/check',authMiddleware);
 app.get('/check', check);
